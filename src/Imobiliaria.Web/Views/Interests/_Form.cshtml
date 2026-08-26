@@ -1,0 +1,9 @@
+@model InterestFormViewModel
+<div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+<div class="form-grid">
+    <div class="form-field form-field-wide"><label asp-for="ClientId"></label><select asp-for="ClientId" asp-items="Model.Clients"><option value="0">Selecione um cliente</option></select><span asp-validation-for="ClientId"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="PreferredZone"></label><input asp-for="PreferredZone" placeholder="Ex.: Cascais" /><span asp-validation-for="PreferredZone"></span></div>
+    <div class="form-field"><label asp-for="MinimumRooms"></label><input asp-for="MinimumRooms" inputmode="numeric" /><span asp-validation-for="MinimumRooms"></span></div>
+    <div class="form-field"><label asp-for="MaximumPrice"></label><input asp-for="MaximumPrice" inputmode="decimal" placeholder="Opcional" /><span asp-validation-for="MaximumPrice"></span></div>
+</div>
+<div class="form-actions"><button class="btn btn-primary" type="submit">@ViewData["SubmitLabel"]</button><a class="btn btn-ghost" asp-action="Index">Cancelar</a></div>

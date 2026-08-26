@@ -1,0 +1,5 @@
+@model PropertyFormViewModel
+@{ ViewData["Title"] = "Novo imóvel"; ViewData["SubmitLabel"] = "Criar imóvel"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Novo registo</span><h1>Adicionar imóvel</h1><p>Preencha a informação comercial e associe um proprietário, se aplicável.</p></div>
+<form asp-action="Create" method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

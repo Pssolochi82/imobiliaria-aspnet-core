@@ -1,0 +1,68 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Resumo";
+}
+
+<section class="hero-grid">
+    <div class="hero-copy">
+        <span class="eyebrow">Gestão simples. Decisões mais claras.</span>
+        <h1>O negócio imobiliário, organizado num só lugar.</h1>
+        <p>Acompanhe imóveis, clientes, preferências e visitas com uma visão rápida do que precisa da sua atenção.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-accent" asp-controller="Properties" asp-action="Create">Registar imóvel</a>
+            <a class="btn btn-outline-light" asp-controller="Visits" asp-action="Create">Agendar visita</a>
+        </div>
+    </div>
+    <div class="hero-illustration" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="building building-back"></div>
+        <div class="building building-front"><span></span><span></span><span></span><span></span></div>
+        <div class="hero-caption"><strong>@Model.AvailablePropertyCount</strong> imóveis disponíveis</div>
+    </div>
+</section>
+
+<section class="stats-grid" aria-label="Indicadores principais">
+    <a class="stat-card" asp-controller="Clients" asp-action="Index"><span>Clientes</span><strong>@Model.ClientCount</strong><small>contactos ativos</small></a>
+    <a class="stat-card" asp-controller="Properties" asp-action="Index"><span>Disponíveis</span><strong>@Model.AvailablePropertyCount</strong><small>imóveis no mercado</small></a>
+    <a class="stat-card" asp-controller="Visits" asp-action="Index"><span>Próximas visitas</span><strong>@Model.UpcomingVisitCount</strong><small>na agenda</small></a>
+    <a class="stat-card" asp-controller="Interests" asp-action="Index"><span>Interesses</span><strong>@Model.InterestCount</strong><small>perfis de procura</small></a>
+</section>
+
+<div class="dashboard-grid">
+    <section>
+        <div class="section-heading">
+            <div><span class="eyebrow">Portefólio</span><h2>Imóveis recentes</h2></div>
+            <a class="text-link" asp-controller="Properties" asp-action="Index">Ver todos →</a>
+        </div>
+        <div class="property-grid property-grid-compact">
+            @foreach (var property in Model.RecentProperties)
+            {
+                <partial name="_PropertyCard" model="property" />
+            }
+        </div>
+    </section>
+
+    <aside class="agenda-panel">
+        <div class="section-heading">
+            <div><span class="eyebrow">Agenda</span><h2>Próximas visitas</h2></div>
+            <a class="icon-link" asp-controller="Visits" asp-action="Create" aria-label="Agendar visita">+</a>
+        </div>
+        @if (Model.UpcomingVisits.Count == 0)
+        {
+            <p class="empty-state">Não existem visitas agendadas.</p>
+        }
+        else
+        {
+            <ol class="agenda-list">
+                @foreach (var visit in Model.UpcomingVisits)
+                {
+                    <li>
+                        <time datetime="@visit.ScheduledAt.ToString("s")"><strong>@visit.ScheduledAt.ToString("dd")</strong><span>@visit.ScheduledAt.ToString("MMM")</span></time>
+                        <div><strong>@visit.Property.Title</strong><span>@visit.Client.Name · @visit.ScheduledAt.ToString("HH:mm")</span></div>
+                        <a asp-controller="Visits" asp-action="Details" asp-route-id="@visit.Id" aria-label="Abrir visita">→</a>
+                    </li>
+                }
+            </ol>
+        }
+    </aside>
+</div>

@@ -1,0 +1,28 @@
+@model PropertyListing
+@{ ViewData["Title"] = Model.Title; }
+
+<div class="detail-hero">
+    <div class="detail-hero-visual property-visual-@Model.Type.ToString().ToLowerInvariant()"><span class="property-monogram" aria-hidden="true">@Model.Zone[..1].ToUpperInvariant()</span></div>
+    <div class="detail-hero-copy">
+        <div><span class="status-pill status-@Model.Status.ToString().ToLowerInvariant()">@Model.Status.GetDisplayName()</span><span class="eyebrow">@Model.Type.GetDisplayName() · @Model.Zone</span></div>
+        <h1>@Model.Title</h1><p>@Model.Address</p><strong class="detail-price">@Model.Price.ToString("C0")</strong>
+        <div class="action-group"><a class="btn btn-primary" asp-controller="Visits" asp-action="Create" asp-route-propertyId="@Model.Id">Agendar visita</a><a class="btn btn-ghost" asp-action="Edit" asp-route-id="@Model.Id">Editar</a></div>
+    </div>
+</div>
+
+<div class="details-grid property-details-grid">
+    <section class="content-card">
+        <span class="eyebrow">Descrição</span><h2>Sobre este imóvel</h2><p class="lead-copy">@Model.Description</p>
+        <div class="feature-grid"><div><strong>@Model.Rooms</strong><span>quartos</span></div><div><strong>@Model.AreaSquareMeters.ToString("N0")</strong><span>m² de área</span></div><div><strong>@Model.Year</strong><span>ano</span></div></div>
+    </section>
+    <aside class="content-card">
+        <h2>Informação</h2><dl class="detail-list"><div><dt>Tipo</dt><dd>@Model.Type.GetDisplayName()</dd></div><div><dt>Zona</dt><dd>@Model.Zone</dd></div><div><dt>Proprietário</dt><dd>@if (Model.Owner is null) { <text>Não associado</text> } else { <a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.OwnerId">@Model.Owner.Name</a> }</dd></div><div><dt>Referência</dt><dd>IMO-@Model.Id.ToString("D4")</dd></div></dl>
+    </aside>
+</div>
+
+<section class="content-card section-card">
+    <div class="section-heading"><div><span class="eyebrow">Agenda</span><h2>Visitas ao imóvel</h2></div><a class="text-link" asp-controller="Visits" asp-action="Create" asp-route-propertyId="@Model.Id">Agendar →</a></div>
+    @if (Model.Visits.Count == 0) { <p class="empty-state">Ainda não existem visitas associadas.</p> }
+    else { <div class="simple-list">@foreach (var visit in Model.Visits.OrderBy(item => item.ScheduledAt)) { <a asp-controller="Visits" asp-action="Details" asp-route-id="@visit.Id"><span><strong>@visit.Client.Name</strong><small>@visit.ScheduledAt.ToString("dd MMM yyyy · HH:mm")</small></span><span class="status-pill status-@visit.Status.ToString().ToLowerInvariant()">@visit.Status.GetDisplayName()</span></a> }</div> }
+</section>
+<div class="danger-zone"><span>Precisa de remover este registo?</span><a asp-action="Delete" asp-route-id="@Model.Id">Eliminar imóvel</a></div>

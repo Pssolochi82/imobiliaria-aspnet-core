@@ -1,0 +1,10 @@
+@model VisitFormViewModel
+<div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+<div class="form-grid">
+    <div class="form-field form-field-wide"><label asp-for="ClientId"></label><select asp-for="ClientId" asp-items="Model.Clients"><option value="0">Selecione um cliente</option></select><span asp-validation-for="ClientId"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="PropertyId"></label><select asp-for="PropertyId" asp-items="Model.Properties"><option value="0">Selecione um imóvel</option></select><span asp-validation-for="PropertyId"></span></div>
+    <div class="form-field"><label asp-for="ScheduledAt"></label><input asp-for="ScheduledAt" asp-format="{0:yyyy-MM-ddTHH:mm}" type="datetime-local" /><span asp-validation-for="ScheduledAt"></span></div>
+    <div class="form-field"><label asp-for="Status"></label><select asp-for="Status" asp-items="Html.GetEnumSelectList<VisitStatus>()"></select><span asp-validation-for="Status"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="Notes"></label><textarea asp-for="Notes" rows="4" placeholder="Informações úteis para a visita"></textarea><span asp-validation-for="Notes"></span></div>
+</div>
+<div class="form-actions"><button class="btn btn-primary" type="submit">@ViewData["SubmitLabel"]</button><a class="btn btn-ghost" asp-action="Index">Cancelar</a></div>

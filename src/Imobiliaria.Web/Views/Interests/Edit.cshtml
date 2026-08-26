@@ -1,0 +1,5 @@
+@model InterestFormViewModel
+@{ ViewData["Title"] = "Editar interesse"; ViewData["SubmitLabel"] = "Guardar alterações"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Perfil de procura</span><h1>Atualizar interesse</h1><p>Ajuste as preferências atuais do cliente.</p></div>
+<form method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

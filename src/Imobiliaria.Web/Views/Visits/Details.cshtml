@@ -1,0 +1,6 @@
+@model Visit
+@{ ViewData["Title"] = "Detalhes da visita"; }
+<div class="page-heading heading-with-action"><div><span class="status-pill status-@Model.Status.ToString().ToLowerInvariant()">@Model.Status.GetDisplayName()</span><h1>Visita de @Model.ScheduledAt.ToString("dd MMM yyyy")</h1><p>@Model.ScheduledAt.ToString("HH:mm") · @Model.Property.Zone</p></div><div class="action-group"><a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar visita</a><a class="btn btn-ghost" asp-action="Index">Voltar</a></div></div>
+<div class="details-grid"><section class="content-card"><h2>Imóvel</h2><h3><a asp-controller="Properties" asp-action="Details" asp-route-id="@Model.PropertyId">@Model.Property.Title</a></h3><p>@Model.Property.Address</p></section><section class="content-card"><h2>Cliente</h2><h3><a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.ClientId">@Model.Client.Name</a></h3><p>@Model.Client.Email · @Model.Client.Phone</p></section></div>
+<section class="content-card section-card"><span class="eyebrow">Notas</span><h2>Informações da visita</h2><p>@(Model.Notes ?? "Não existem notas para esta visita.")</p></section>
+<div class="danger-zone"><span>Precisa de remover esta marcação?</span><a asp-action="Delete" asp-route-id="@Model.Id">Eliminar visita</a></div>

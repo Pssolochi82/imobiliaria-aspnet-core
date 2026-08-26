@@ -1,0 +1,15 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Erro";
+}
+
+<div class="page-heading narrow-heading">
+    <span class="eyebrow text-danger">Ocorreu um erro</span>
+    <h1>Não foi possível concluir o pedido.</h1>
+    <p>Tente novamente. Se o problema continuar, use o identificador abaixo para consultar os registos da aplicação.</p>
+</div>
+
+@if (Model.ShowRequestId)
+{
+    <section class="content-card confirm-card"><strong>Identificador do pedido:</strong> <code>@Model.RequestId</code></section>
+}

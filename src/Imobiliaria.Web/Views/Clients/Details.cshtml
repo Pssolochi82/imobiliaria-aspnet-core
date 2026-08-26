@@ -1,0 +1,31 @@
+@model Client
+@{ ViewData["Title"] = Model.Name; }
+
+<div class="page-heading heading-with-action">
+    <div><span class="eyebrow">Cliente #@Model.Id</span><h1>@Model.Name</h1><p>@Model.Email · @Model.Phone</p></div>
+    <div class="action-group"><a class="btn btn-primary" asp-controller="Interests" asp-action="Create" asp-route-clientId="@Model.Id">+ Interesse</a><a class="btn btn-ghost" asp-action="Edit" asp-route-id="@Model.Id">Editar</a></div>
+</div>
+
+<div class="details-grid">
+    <section class="content-card">
+        <h2>Dados do cliente</h2>
+        <dl class="detail-list"><div><dt>Email</dt><dd><a href="mailto:@Model.Email">@Model.Email</a></dd></div><div><dt>Telefone</dt><dd>@Model.Phone</dd></div><div><dt>Morada</dt><dd>@(Model.Address ?? "Não indicada")</dd></div><div><dt>Registado em</dt><dd>@Model.CreatedAtUtc.ToLocalTime().ToString("dd MMM yyyy")</dd></div></dl>
+    </section>
+    <aside class="content-card summary-card">
+        <div><strong>@Model.Interests.Count</strong><span>interesses</span></div><div><strong>@Model.Visits.Count</strong><span>visitas</span></div><div><strong>@Model.Properties.Count</strong><span>imóveis</span></div>
+    </aside>
+</div>
+
+<section class="content-card section-card">
+    <div class="section-heading"><div><span class="eyebrow">Procura</span><h2>Interesses</h2></div><a class="text-link" asp-controller="Interests" asp-action="Create" asp-route-clientId="@Model.Id">Adicionar →</a></div>
+    @if (Model.Interests.Count == 0) { <p class="empty-state">Ainda não existem interesses registados.</p> }
+    else { <div class="chip-list">@foreach (var interest in Model.Interests) { <span class="info-chip"><strong>@interest.PreferredZone</strong> · @interest.MinimumRooms+ quartos @if (interest.MaximumPrice.HasValue) { <text>· até @interest.MaximumPrice.Value.ToString("C0")</text> }</span> }</div> }
+</section>
+
+<section class="content-card section-card">
+    <div class="section-heading"><div><span class="eyebrow">Histórico</span><h2>Visitas</h2></div><a class="text-link" asp-controller="Visits" asp-action="Create">Agendar →</a></div>
+    @if (Model.Visits.Count == 0) { <p class="empty-state">Ainda não existem visitas associadas.</p> }
+    else { <div class="simple-list">@foreach (var visit in Model.Visits.OrderByDescending(item => item.ScheduledAt)) { <a asp-controller="Visits" asp-action="Details" asp-route-id="@visit.Id"><span><strong>@visit.Property.Title</strong><small>@visit.ScheduledAt.ToString("dd MMM yyyy · HH:mm")</small></span><span class="status-pill status-@visit.Status.ToString().ToLowerInvariant()">@visit.Status.GetDisplayName()</span></a> }</div> }
+</section>
+
+<div class="danger-zone"><span>Precisa de remover este registo?</span><a asp-action="Delete" asp-route-id="@Model.Id">Eliminar cliente</a></div>

@@ -1,0 +1,9 @@
+@model ClientFormViewModel
+<div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+<div class="form-grid">
+    <div class="form-field form-field-wide"><label asp-for="Name"></label><input asp-for="Name" autocomplete="name" /><span asp-validation-for="Name"></span></div>
+    <div class="form-field"><label asp-for="Email"></label><input asp-for="Email" autocomplete="email" /><span asp-validation-for="Email"></span></div>
+    <div class="form-field"><label asp-for="Phone"></label><input asp-for="Phone" autocomplete="tel" /><span asp-validation-for="Phone"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="Address"></label><input asp-for="Address" autocomplete="street-address" placeholder="Ex.: Lisboa" /><span asp-validation-for="Address"></span></div>
+</div>
+<div class="form-actions"><button class="btn btn-primary" type="submit">@ViewData["SubmitLabel"]</button><a class="btn btn-ghost" asp-action="Index">Cancelar</a></div>

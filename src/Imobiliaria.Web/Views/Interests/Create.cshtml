@@ -1,0 +1,5 @@
+@model InterestFormViewModel
+@{ ViewData["Title"] = "Novo interesse"; ViewData["SubmitLabel"] = "Registar interesse"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Perfil de procura</span><h1>Adicionar interesse</h1><p>Registe a zona, a tipologia e o orçamento pretendidos.</p></div>
+<form asp-action="Create" method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

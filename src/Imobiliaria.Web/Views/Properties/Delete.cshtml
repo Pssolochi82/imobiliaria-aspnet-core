@@ -1,0 +1,4 @@
+@model PropertyListing
+@{ ViewData["Title"] = "Eliminar imóvel"; }
+<div class="page-heading narrow-heading"><span class="eyebrow text-danger">Ação irreversível</span><h1>Eliminar este imóvel?</h1><p><strong>@Model.Title</strong><br />Imóveis com visitas associadas não podem ser removidos.</p></div>
+<form method="post" class="content-card confirm-card"><p>Confirme que pretende eliminar permanentemente este registo.</p><div class="form-actions"><button class="btn btn-danger" type="submit">Sim, eliminar</button><a class="btn btn-ghost" asp-action="Details" asp-route-id="@Model.Id">Cancelar</a></div></form>

@@ -1,0 +1,33 @@
+@model PropertyListViewModel
+@{ ViewData["Title"] = "Imóveis"; }
+
+<div class="page-heading heading-with-action">
+    <div><span class="eyebrow">Portefólio</span><h1>Imóveis</h1><p>Consulte e mantenha a carteira imobiliária atualizada.</p></div>
+    <a class="btn btn-primary" asp-action="Create">+ Novo imóvel</a>
+</div>
+
+<form method="get" class="filter-bar" role="search">
+    <div class="search-field"><label class="visually-hidden" for="query">Pesquisar imóveis</label><input id="query" name="query" value="@Model.Query" placeholder="Título, zona ou morada" /></div>
+    <div><label class="visually-hidden" for="status">Estado</label><select id="status" name="status" asp-for="Status" asp-items="Html.GetEnumSelectList<PropertyStatus>()"><option value="">Todos os estados</option></select></div>
+    <button class="btn btn-dark" type="submit">Filtrar</button>
+    @if (!string.IsNullOrWhiteSpace(Model.Query) || Model.Status.HasValue) { <a class="btn btn-ghost" asp-action="Index">Limpar</a> }
+</form>
+
+@if (Model.Properties.TotalItems == 0)
+{
+    <div class="content-card empty-state"><h2>Nenhum imóvel encontrado</h2><p>Ajuste os filtros ou adicione um novo imóvel.</p></div>
+}
+else
+{
+    <div class="property-grid">
+        @foreach (var property in Model.Properties.Items) { <partial name="_PropertyCard" model="property" /> }
+    </div>
+}
+
+@if (Model.Properties.TotalPages > 1)
+{
+    <nav class="pagination-bar" aria-label="Paginação de imóveis">
+        <span>Página @Model.Properties.Page de @Model.Properties.TotalPages</span>
+        <div><a class="btn btn-sm btn-ghost @(Model.Properties.HasPreviousPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-status="@Model.Status" asp-route-page="@(Model.Properties.Page - 1)">Anterior</a><a class="btn btn-sm btn-ghost @(Model.Properties.HasNextPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-status="@Model.Status" asp-route-page="@(Model.Properties.Page + 1)">Seguinte</a></div>
+    </nav>
+}

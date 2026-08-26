@@ -1,0 +1,20 @@
+@model IReadOnlyList<Interest>
+@{ ViewData["Title"] = "Interesses"; }
+
+<div class="page-heading heading-with-action"><div><span class="eyebrow">Perfis de procura</span><h1>Interesses</h1><p>Preferências dos clientes para encontrar oportunidades compatíveis.</p></div><a class="btn btn-primary" asp-action="Create">+ Novo interesse</a></div>
+
+<section class="content-card table-card">
+    @if (Model.Count == 0)
+    {
+        <div class="empty-state"><h2>Nenhum interesse registado</h2><p>Associe uma preferência de procura a um cliente.</p></div>
+    }
+    else
+    {
+        <div class="table-responsive"><table class="table app-table align-middle"><thead><tr><th>Cliente</th><th>Zona preferida</th><th>Quartos</th><th>Orçamento</th><th class="text-end">Ações</th></tr></thead><tbody>
+        @foreach (var interest in Model)
+        {
+            <tr><td><a asp-controller="Clients" asp-action="Details" asp-route-id="@interest.ClientId"><strong>@interest.Client.Name</strong></a></td><td>@interest.PreferredZone</td><td>@interest.MinimumRooms ou mais</td><td>@(interest.MaximumPrice?.ToString("C0") ?? "Sem limite")</td><td class="text-end table-actions"><a asp-action="Edit" asp-route-id="@interest.Id">Editar</a><a class="text-danger" asp-action="Delete" asp-route-id="@interest.Id">Eliminar</a></td></tr>
+        }
+        </tbody></table></div>
+    }
+</section>

@@ -1,0 +1,4 @@
+@model Interest
+@{ ViewData["Title"] = "Eliminar interesse"; }
+<div class="page-heading narrow-heading"><span class="eyebrow text-danger">Confirmar eliminação</span><h1>Eliminar interesse?</h1><p>@Model.Client.Name procura imóvel em <strong>@Model.PreferredZone</strong>.</p></div>
+<form method="post" class="content-card confirm-card"><p>Esta preferência deixará de aparecer no perfil do cliente.</p><div class="form-actions"><button class="btn btn-danger" type="submit">Sim, eliminar</button><a class="btn btn-ghost" asp-action="Index">Cancelar</a></div></form>

@@ -1,0 +1,16 @@
+@model PropertyFormViewModel
+<div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+<div class="form-grid">
+    <div class="form-field form-field-wide"><label asp-for="Title"></label><input asp-for="Title" /><span asp-validation-for="Title"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="Address"></label><input asp-for="Address" autocomplete="street-address" /><span asp-validation-for="Address"></span></div>
+    <div class="form-field"><label asp-for="Zone"></label><input asp-for="Zone" /><span asp-validation-for="Zone"></span></div>
+    <div class="form-field"><label asp-for="Type"></label><select asp-for="Type" asp-items="Html.GetEnumSelectList<PropertyType>()"></select><span asp-validation-for="Type"></span></div>
+    <div class="form-field"><label asp-for="Year"></label><input asp-for="Year" inputmode="numeric" /><span asp-validation-for="Year"></span></div>
+    <div class="form-field"><label asp-for="Rooms"></label><input asp-for="Rooms" inputmode="numeric" /><span asp-validation-for="Rooms"></span></div>
+    <div class="form-field"><label asp-for="AreaSquareMeters"></label><input asp-for="AreaSquareMeters" inputmode="decimal" /><span asp-validation-for="AreaSquareMeters"></span></div>
+    <div class="form-field"><label asp-for="Price"></label><input asp-for="Price" inputmode="decimal" /><span asp-validation-for="Price"></span></div>
+    <div class="form-field"><label asp-for="Status"></label><select asp-for="Status" asp-items="Html.GetEnumSelectList<PropertyStatus>()"></select><span asp-validation-for="Status"></span></div>
+    <div class="form-field"><label asp-for="OwnerId"></label><select asp-for="OwnerId" asp-items="Model.Owners"><option value="">Sem proprietário associado</option></select><span asp-validation-for="OwnerId"></span></div>
+    <div class="form-field form-field-wide"><label asp-for="Description"></label><textarea asp-for="Description" rows="5"></textarea><span asp-validation-for="Description"></span><small>Entre 20 e 1200 caracteres.</small></div>
+</div>
+<div class="form-actions"><button class="btn btn-primary" type="submit">@ViewData["SubmitLabel"]</button><a class="btn btn-ghost" asp-action="Index">Cancelar</a></div>

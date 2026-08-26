@@ -1,0 +1,16 @@
+@model PropertyListing
+<article class="property-card">
+    <div class="property-visual property-visual-@Model.Type.ToString().ToLowerInvariant()">
+        <span class="status-pill status-@Model.Status.ToString().ToLowerInvariant()">@Model.Status.GetDisplayName()</span>
+        <span class="property-monogram" aria-hidden="true">@Model.Zone[..1].ToUpperInvariant()</span>
+    </div>
+    <div class="property-card-body">
+        <div class="eyebrow">@Model.Type.GetDisplayName() · @Model.Zone</div>
+        <h3><a asp-controller="Properties" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a></h3>
+        <p class="property-meta">@Model.Rooms quartos <span>·</span> @Model.AreaSquareMeters.ToString("N0") m² <span>·</span> @Model.Year</p>
+        <div class="property-card-footer">
+            <strong>@Model.Price.ToString("C0")</strong>
+            <a class="text-link" asp-controller="Properties" asp-action="Details" asp-route-id="@Model.Id">Ver imóvel →</a>
+        </div>
+    </div>
+</article>

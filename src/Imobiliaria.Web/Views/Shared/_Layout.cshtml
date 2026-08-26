@@ -1,0 +1,57 @@
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Plataforma demonstrativa para gestão de clientes, imóveis, interesses e visitas." />
+    <title>@ViewData["Title"] · Morada Gestão</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+            <div class="container">
+                <a class="navbar-brand brand-lockup" asp-controller="Home" asp-action="Index" aria-label="Morada Gestão — início">
+                    <span class="brand-mark" aria-hidden="true">M</span>
+                    <span><strong>morada</strong><small>gestão imobiliária</small></span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Abrir navegação">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse justify-content-end">
+                    <ul class="navbar-nav align-items-lg-center gap-lg-1">
+                        <li class="nav-item"><a class="nav-link @(currentController == "Home" ? "active" : null)" asp-controller="Home" asp-action="Index">Resumo</a></li>
+                        <li class="nav-item"><a class="nav-link @(currentController == "Properties" ? "active" : null)" asp-controller="Properties" asp-action="Index">Imóveis</a></li>
+                        <li class="nav-item"><a class="nav-link @(currentController == "Clients" ? "active" : null)" asp-controller="Clients" asp-action="Index">Clientes</a></li>
+                        <li class="nav-item"><a class="nav-link @(currentController == "Interests" ? "active" : null)" asp-controller="Interests" asp-action="Index">Interesses</a></li>
+                        <li class="nav-item"><a class="nav-link @(currentController == "Visits" ? "active" : null)" asp-controller="Visits" asp-action="Index">Visitas</a></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-accent btn-sm" asp-controller="Properties" asp-action="Create">+ Novo imóvel</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container app-shell">
+        <main role="main">
+            <partial name="_Alerts" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+            <span>&copy; @DateTime.Today.Year Morada Gestão</span>
+            <a asp-controller="Home" asp-action="About">Projeto académico modernizado com ASP.NET Core</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

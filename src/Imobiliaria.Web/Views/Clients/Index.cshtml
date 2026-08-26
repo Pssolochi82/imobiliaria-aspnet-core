@@ -1,0 +1,55 @@
+@model ClientListViewModel
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="page-heading heading-with-action">
+    <div><span class="eyebrow">Relações</span><h1>Clientes</h1><p>Contactos, interesses e histórico de visitas num só perfil.</p></div>
+    <a class="btn btn-primary" asp-action="Create">+ Novo cliente</a>
+</div>
+
+<form method="get" class="filter-bar" role="search">
+    <div class="search-field"><label class="visually-hidden" for="query">Pesquisar clientes</label><input id="query" name="query" value="@Model.Query" placeholder="Pesquisar por nome, email ou telefone" /></div>
+    <button class="btn btn-dark" type="submit">Pesquisar</button>
+    @if (!string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <a class="btn btn-ghost" asp-action="Index">Limpar</a>
+    }
+</form>
+
+<section class="content-card table-card">
+    @if (Model.Clients.TotalItems == 0)
+    {
+        <div class="empty-state"><h2>Nenhum cliente encontrado</h2><p>Experimente outra pesquisa ou crie o primeiro registo.</p></div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table app-table align-middle">
+                <thead><tr><th>Cliente</th><th>Contacto</th><th>Localidade</th><th class="text-end">Ações</th></tr></thead>
+                <tbody>
+                @foreach (var client in Model.Clients.Items)
+                {
+                    <tr>
+                        <td><div class="person-cell"><span>@client.Name[..1].ToUpperInvariant()</span><div><strong>@client.Name</strong><small>Cliente #@client.Id</small></div></div></td>
+                        <td><a href="mailto:@client.Email">@client.Email</a><small class="d-block">@client.Phone</small></td>
+                        <td>@(client.Address ?? "—")</td>
+                        <td class="text-end table-actions"><a asp-action="Details" asp-route-id="@client.Id">Ver</a><a asp-action="Edit" asp-route-id="@client.Id">Editar</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
+
+@if (Model.Clients.TotalPages > 1)
+{
+    <nav class="pagination-bar" aria-label="Paginação de clientes">
+        <span>Página @Model.Clients.Page de @Model.Clients.TotalPages</span>
+        <div>
+            <a class="btn btn-sm btn-ghost @(Model.Clients.HasPreviousPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-page="@(Model.Clients.Page - 1)">Anterior</a>
+            <a class="btn btn-sm btn-ghost @(Model.Clients.HasNextPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-page="@(Model.Clients.Page + 1)">Seguinte</a>
+        </div>
+    </nav>
+}

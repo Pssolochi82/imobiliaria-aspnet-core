@@ -1,0 +1,31 @@
+@model VisitListViewModel
+@{ ViewData["Title"] = "Visitas"; }
+
+<div class="page-heading heading-with-action"><div><span class="eyebrow">Agenda comercial</span><h1>Visitas</h1><p>Planeie e acompanhe as visitas aos imóveis.</p></div><a class="btn btn-primary" asp-action="Create">+ Agendar visita</a></div>
+
+<form method="get" class="filter-bar" role="search">
+    <div class="search-field"><label class="visually-hidden" for="query">Pesquisar visitas</label><input id="query" name="query" value="@Model.Query" placeholder="Cliente, imóvel ou zona" /></div>
+    <label class="check-filter"><input asp-for="UpcomingOnly" /> Apenas próximas</label>
+    <button class="btn btn-dark" type="submit">Filtrar</button><a class="btn btn-ghost" asp-action="Index">Limpar</a>
+</form>
+
+<section class="content-card table-card">
+    @if (Model.Visits.TotalItems == 0)
+    {
+        <div class="empty-state"><h2>Nenhuma visita encontrada</h2><p>Ajuste os filtros ou agende uma visita.</p></div>
+    }
+    else
+    {
+        <div class="table-responsive"><table class="table app-table align-middle"><thead><tr><th>Data</th><th>Cliente</th><th>Imóvel</th><th>Estado</th><th class="text-end">Ações</th></tr></thead><tbody>
+        @foreach (var visit in Model.Visits.Items)
+        {
+            <tr><td><time datetime="@visit.ScheduledAt.ToString("s")"><strong>@visit.ScheduledAt.ToString("dd MMM yyyy")</strong><small class="d-block">@visit.ScheduledAt.ToString("HH:mm")</small></time></td><td><a asp-controller="Clients" asp-action="Details" asp-route-id="@visit.ClientId">@visit.Client.Name</a></td><td><a asp-controller="Properties" asp-action="Details" asp-route-id="@visit.PropertyId"><strong>@visit.Property.Title</strong><small class="d-block">@visit.Property.Zone</small></a></td><td><span class="status-pill status-@visit.Status.ToString().ToLowerInvariant()">@visit.Status.GetDisplayName()</span></td><td class="text-end table-actions"><a asp-action="Details" asp-route-id="@visit.Id">Ver</a><a asp-action="Edit" asp-route-id="@visit.Id">Editar</a></td></tr>
+        }
+        </tbody></table></div>
+    }
+</section>
+
+@if (Model.Visits.TotalPages > 1)
+{
+    <nav class="pagination-bar" aria-label="Paginação de visitas"><span>Página @Model.Visits.Page de @Model.Visits.TotalPages</span><div><a class="btn btn-sm btn-ghost @(Model.Visits.HasPreviousPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-upcomingOnly="@Model.UpcomingOnly" asp-route-page="@(Model.Visits.Page - 1)">Anterior</a><a class="btn btn-sm btn-ghost @(Model.Visits.HasNextPage ? null : "disabled")" asp-route-query="@Model.Query" asp-route-upcomingOnly="@Model.UpcomingOnly" asp-route-page="@(Model.Visits.Page + 1)">Seguinte</a></div></nav>
+}

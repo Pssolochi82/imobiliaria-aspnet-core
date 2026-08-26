@@ -1,0 +1,5 @@
+@model VisitFormViewModel
+@{ ViewData["Title"] = "Agendar visita"; ViewData["SubmitLabel"] = "Agendar visita"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Nova marcação</span><h1>Agendar visita</h1><p>Associe um cliente, um imóvel e a data pretendida.</p></div>
+<form asp-action="Create" method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

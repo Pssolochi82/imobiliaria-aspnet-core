@@ -1,0 +1,5 @@
+@model VisitFormViewModel
+@{ ViewData["Title"] = "Editar visita"; ViewData["SubmitLabel"] = "Guardar alterações"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Atualizar agenda</span><h1>Editar visita</h1><p>Altere a marcação ou atualize o seu estado.</p></div>
+<form method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

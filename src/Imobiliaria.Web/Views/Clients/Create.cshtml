@@ -1,0 +1,5 @@
+@model ClientFormViewModel
+@{ ViewData["Title"] = "Novo cliente"; ViewData["SubmitLabel"] = "Criar cliente"; }
+<div class="page-heading narrow-heading"><span class="eyebrow">Novo registo</span><h1>Adicionar cliente</h1><p>Comece pelos dados essenciais. Pode associar interesses e visitas depois.</p></div>
+<form asp-action="Create" method="post" class="content-card form-card"><partial name="_Form" model="Model" /></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
