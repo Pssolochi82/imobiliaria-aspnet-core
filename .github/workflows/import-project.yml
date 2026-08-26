@@ -14,10 +14,11 @@ permissions:
 
 jobs:
   import:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Expand validated source archive
         shell: bash
@@ -30,7 +31,7 @@ jobs:
           cp -R .project-import/imobiliaria-aspnet-core/* .
           rm -rf .project-import
           rm -f imobiliaria-aspnet-core.zip
-          rm -f .github/workflows/import-project.yml
+          rm -f .github/workflows/ci.yml
 
       - name: Publish source tree
         shell: bash
