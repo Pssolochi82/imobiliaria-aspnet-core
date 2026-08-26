@@ -7,6 +7,10 @@ Aplicação web para gerir clientes, imóveis, interesses de compra e visitas. O
 
 > Este projeto nasceu em contexto de aula como projeto final da UFCD de ASP.NET Core. A primeira versão foi construída com ASP.NET Web Forms e .NET Framework 4.7.2. Em 2026, o código foi revisto em profundidade e migrado para ASP.NET Core MVC em .NET 10, com uma arquitetura, interface e estratégia de testes adequadas a portfólio.
 
+## Demonstração
+
+![Página inicial do Morada — Gestão Imobiliária](docs/images/dashboard.png)
+
 ## Funcionalidades
 
 - Dashboard com indicadores, imóveis recentes e próximas visitas;
